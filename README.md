@@ -37,7 +37,7 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 
 ## Architecture
 
-![architecture](https://github.com/user-attachments/assets/ede4f777-bbdf-4bbe-ae99-bb977e99c4d0)
+![architecture](https://github.com/user-attachments/assets/7259d4d1-ff20-451a-ad67-254f705c99ac)
 
 ## Technology Stack
 

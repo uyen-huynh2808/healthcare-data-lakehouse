@@ -113,7 +113,7 @@ Detect abnormal vital patterns in real time to alert clinicians.
 
 ## Project Files
 
-1. `synthea_data/records.csv` – Synthea-generated patient demographics and vitals (CSV/JSON format).
+1. `synthea_data/` – Synthea-generated patient demographics and vitals (CSV/JSON format).
 2. `data_simulator/vitals_generator.py` – Generates synthetic patient vitals using Faker for real-time simulation.
 3. `src/kafka_producer.py` – Reads from the simulator and streams patient vitals to Kafka topics.
 4. `delta_lake_setup/schema_bronze.json` – Delta Lake Bronze layer schema definition.

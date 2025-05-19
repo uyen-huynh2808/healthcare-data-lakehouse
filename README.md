@@ -48,7 +48,7 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 | Streaming               | Apache Spark (Structured Streaming)                        |
 | Storage                 | Delta Lake (Parquet + Transaction Logs)                    |
 | ML / Anomaly Detection  | PySpark ML, scikit-learn, MLflow |
-| Orchestration           | Apache Airflow (ETL + ML workflows)            |
+| Orchestration           | Apache Airflow (ETL)            |
 | Query Layer             | Google BigQuery                                            |
 | Visualization           | Looker Studio                                              |
 

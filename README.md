@@ -113,17 +113,21 @@ Detect abnormal vital patterns in real time to alert clinicians.
 
 ## Project Files
 
-1. `synthea_data/` – Synthea patient records and vitals (CSV/JSON)
-2. `data_simulator/` – Faker-based real-time vitals generator
-3. `kafka_producer.py` – Streams vitals to Kafka
-4. `delta_lake_setup/` – Delta Lake schema setup (Bronze/Silver/Gold)
-5. `spark_streaming_job.py` – Spark job to process streams to Delta
-6. `train_model.py` – Anomaly detection model training (Isolation Forest, etc.)
-7. `ml_inference_stream.py` – Real-time model scoring
-8. `bigquery_loader.py` – Transfer Gold layer to BigQuery
-9. `dags/` – Airflow DAGs for ETL and ML workflows
-10. `dashboards/` – Looker Studio templates and metrics
-11. `pipeline_setup_guide.ipynb` – Jupyter notebook walkthrough for local setup, dependencies, and execution flow
+1. `synthea_data/records.csv` – Synthea-generated patient demographics and vitals (CSV/JSON format).
+2. `data_simulator/vitals_generator.py` – Generates synthetic patient vitals using Faker for real-time simulation.
+3. `src/kafka_producer.py` – Reads from the simulator and streams patient vitals to Kafka topics.
+4. `delta_lake_setup/schema_bronze.json` – Delta Lake Bronze layer schema definition.
+5. `delta_lake_setup/schema_silver.json` – Delta Lake Silver layer schema definition.
+6. `delta_lake_setup/schema_gold.json` – Delta Lake Gold layer schema definition.
+7. `src/spark_streaming_job.py` – Spark Structured Streaming job to read from Kafka, apply transformations, and write to Delta Lake (Bronze → Silver → Gold).
+8. `src/train_model.py` – Trains anomaly detection model (e.g., Isolation Forest) using historical + 100,000 new vital records, then saves the model.
+9. `models/anomaly_model.pkl` – Serialized trained model to be reused in real-time streaming inference.
+10. `src/ml_inference_stream.py` – Loads trained model and performs real-time scoring on new patient vitals.
+11. `src/bigquery_loader.py` – Transfers curated Gold layer vitals from Delta Lake to Google BigQuery for further analysis or reporting.
+12. `dags/etl_pipeline.py` – Airflow DAG to orchestrate the streaming ETL flow from Kafka to Delta layers.
+13. `dags/training_pipeline.py` – Airflow DAG to automate model retraining and deployment on schedule.
+14. `notebooks/pipeline_walkthrough.ipynb` – Jupyter notebook for setup, environment config, and running key components of the pipeline.
+15. `notebooks/visualization_insights.ipynb` – Jupyter notebook to visualize charts, detect trends, and present insights from Gold layer data (e.g., abnormal vitals, patient risk patterns).
 
 ## License
 

@@ -114,19 +114,18 @@ Detect abnormal vital patterns in real time to alert clinicians.
 ## Project Files
 
 1. `synthea_data/` – Static Synthea-generated patient demographics and vitals (CSV/JSON format).
-2. `data_simulator/vitals_generator.py` – Generates synthetic patient vitals using Faker for real-time simulation.
-3. `src/kafka_producer.py` – Reads from the simulator and streams patient vitals to Kafka topics.
-4. `delta_lake_setup/schema_bronze.json` – Delta Lake Bronze layer schema definition.
-5. `delta_lake_setup/schema_silver.json` – Delta Lake Silver layer schema definition.
-6. `delta_lake_setup/schema_gold.json` – Delta Lake Gold layer schema definition.
-7. `src/spark_streaming_job.py` – Spark Structured Streaming job to read from Kafka, apply transformations, and write to Delta Lake (Bronze → Silver → Gold).
-8. `src/train_model.py` – Trains anomaly detection model (e.g., Isolation Forest) once using only static Synthea data, then saves the model.
-9. `models/anomaly_model.pkl` – Serialized trained model reused in real-time streaming inference.
-10. `src/ml_inference_stream.py` – Loads the trained model and performs real-time scoring on new patient vitals.
-11. `src/bigquery_loader.py` – Transfers curated Gold layer vitals from Delta Lake to Google BigQuery for further analysis or reporting.
-12. `dags/etl_pipeline.py` – Airflow DAG to orchestrate the streaming ETL flow from Kafka to Delta layers.
-13. `notebooks/pipeline_walkthrough.ipynb` – Jupyter notebook for setup, environment config, and running key components of the pipeline.
-14. `notebooks/visualization_insights.ipynb` – Jupyter notebook to visualize charts, detect trends, and present insights from Gold layer data (e.g., abnormal vitals, patient risk patterns).
+2. `src/vitals_kafka_producer.py` – Generates real-time vitals using Faker and sends them to a Kafka topic.
+3. `delta_lake_setup/schema_bronze.json` – Delta Lake Bronze layer schema definition.
+4. `delta_lake_setup/schema_silver.json` – Delta Lake Silver layer schema definition.
+5. `delta_lake_setup/schema_gold.json` – Delta Lake Gold layer schema definition.
+6. `src/spark_streaming_job.py` – Spark Structured Streaming job to read from Kafka, apply transformations, and write to Delta Lake (Bronze → Silver → Gold).
+7. `src/train_model.py` – Trains anomaly detection model once using only static Synthea data, then saves the model.
+8. `models/anomaly_model.pkl` – Serialized trained model reused in real-time streaming inference.
+9. `src/ml_inference_stream.py` – Loads the trained model and performs real-time scoring on new patient vitals.
+10. `src/bigquery_loader.py` – Transfers curated Gold layer vitals from Delta Lake to Google BigQuery for further analysis or reporting.
+11. `dags/etl_pipeline.py` – Airflow DAG to orchestrate the streaming ETL flow from Kafka to Delta layers.
+12. `notebooks/pipeline_walkthrough.ipynb` – Jupyter notebook for setup, environment config, and running key components of the pipeline.
+13. `notebooks/visualization_insights.ipynb` – Jupyter notebook to visualize charts, detect trends, and present insights from Gold layer data (e.g., abnormal vitals, patient risk patterns).
 
 ## License
 

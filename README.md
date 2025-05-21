@@ -43,11 +43,11 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 
 | Layer                   | Tools/Technologies                                         |
 |------------------------|------------------------------------------------------------|
-| Data Simulation         | Synthea (synthetic EHR), Faker, NumPy, JSON                             |
+| Data Simulation         | Synthea, Faker                            |
 | Ingestion               | Apache Kafka                                               |
 | Streaming               | Apache Spark (Structured Streaming)                        |
-| Storage                 | Delta Lake (Parquet + Transaction Logs)                    |
-| ML / Anomaly Detection  | PySpark ML, scikit-learn, MLflow |
+| Storage                 | Delta Lake                     |
+| ML / Anomaly Detection  | PySpark ML, scikit-learn |
 | Orchestration           | Apache Airflow (ETL)            |
 | Query Layer             | Google BigQuery                                            |
 | Visualization           | Looker Studio                                              |

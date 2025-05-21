@@ -108,62 +108,59 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 | `oxygen_saturation_in_arterial_blood`                                                        | Oxygen saturation percentage                            | Integer |
 
 ## Data Model
-**Delta Lake Tables**
 
-`bronze_patient_vitals`
-- Raw data ingested from Kafka
-- Schema: unvalidated, JSON
+### Delta Lake Tables
 
-`silver_patient_vitals`
-- Cleaned and parsed records
-- Derived fields and simple alert flags
+- **`bronze_patient_vitals`**  
+  Raw Kafka data ingested in JSON format. No validation or transformation applied.
 
-`gold_patient_summary`
-- Aggregated vitals per patient
-- Includes real-time anomaly detection score
-- Partitioned by date and patient_id
+- **`silver_patient_vitals`**  
+  Cleaned and parsed vitals data with derived fields like `age`. 
 
-**BigQuery Tables**
-- Mirrors Gold layer
-- Materialized views:
-  - `patient_risk_scores`
-  - `ward_alert_counts`
-  - `vital_signs_hourly_trend`
+- **`gold_patient_summary`**  
+  Enriched records with model inference scores (e.g., anomaly flags). Optimized for downstream analytics.
+
+### BigQuery Tables
+
+- Mirrors the `gold_patient_summary` table from Delta Lake.
+- Used for dashboards, monitoring, and alerts.
+
+**Suggested Views:**
+- `abnormal_vitals_log` — Lists all records with flagged anomalies or abnormal ranges.
+- `average_vitals_by_age_gender` — Aggregates vitals across age groups and gender.
+- `oxygen_alerts_dashboard` — Shows patients with low oxygen saturation (<90%) over time.
  
 ## ML Model
 
-**Goal:**  
+**Objective:**  
+Identify abnormal patient vitals in real time for early clinical intervention.
 
-Detect abnormal vital patterns in real time to alert clinicians.
+**Approach:**  
+- Trained a supervised **Random Forest Classifier** using labeled Synthea data (`is_ill`)
+- Handled class imbalance using **SMOTE** to improve detection of rare illness cases
+- Persisted model with **Joblib** for real-time inference
 
-**Algorithms Explored:**  
-- **Isolation Forest** – Efficient unsupervised anomaly detection  
-- **AutoEncoder** – Neural-network-based scoring (optional)  
-- **LSTM** – Time-series anomaly detection (if needed)
-
-**Workflow:**  
-1. Train models on Synthea-generated historical data
-2. Register model using MLflow (optional)
-3. Inference in Spark Streaming pipeline
-4. Append anomaly scores to Gold table
-5. Visualize using Looker dashboards
+**Streaming Workflow:**  
+1. Kafka ingests simulated patient vitals  
+2. Spark Streaming loads model and scores each record  
+3. Anomaly predictions are appended to the **Gold Delta Table**  
+4. Results are synced to BigQuery for visualization and alerting
 
 ## Project Files
 
-1. `synthea_data/` – Contains static Synthea-generated patient demographics and vital signs in CSV/JSON format, including the transformed dataset used for training (`data_for_train.csv`).
-2. `src/prepare_data.py` – Script for preparing the dataset for training.
-3. `src/train_model.py` – Trains the anomaly detection model using static Synthea data, then saves the trained model.
-4. `models/illness_classifier.pkl` – The serialized trained model, used for real-time streaming inference.
-5. `src/vitals_kafka_producer.py` – Generates real-time vitals using Faker and sends them to a Kafka topic.
-6. `delta_lake_setup/schema_bronze.json` – Delta Lake Bronze layer schema definition.
-7. `delta_lake_setup/schema_silver.json` – Delta Lake Silver layer schema definition.
-8. `delta_lake_setup/schema_gold.json` – Delta Lake Gold layer schema definition.
-9. `src/spark_streaming_job.py` – Spark Structured Streaming job to read from Kafka, apply transformations, and write to Delta Lake (Bronze → Silver → Gold).
-10. `src/ml_inference_stream.py` – Loads the trained model and performs real-time scoring on new patient vitals.
-11. `src/bigquery_loader.py` – Transfers curated Gold layer vitals from Delta Lake to Google BigQuery for further analysis or reporting.
-12. `dags/etl_pipeline.py` – Airflow DAG to orchestrate the streaming ETL flow from Kafka to Delta layers.
-13. `notebooks/pipeline_walkthrough.ipynb` – Jupyter notebook for setup, environment config, and running key components of the pipeline.
-14. `notebooks/visualization_insights.ipynb` – Jupyter notebook to visualize charts, detect trends, and present insights from Gold layer data (e.g., abnormal vitals, patient risk patterns).
+1. **`synthea_data/`** – Static Synthea-generated patient data used for model training (`data_for_train.csv`).
+2. **`src/prepare_data.py`** – Cleans and transforms static data for training.
+3. **`src/train_model.py`** – Trains the classification model on labeled vitals and saves it.
+4. **`models/illness_classifier.pkl`** – Serialized trained model for real-time inference.
+5. **`src/vitals_kafka_producer.py`** – Simulates real-time vitals and streams them to Kafka.
+6. **`delta_lake_setup/schema_bronze.json`** – Schema for raw Kafka data in Bronze table.
+7. **`delta_lake_setup/schema_silver.json`** – Schema for cleaned records in Silver table.
+8. **`delta_lake_setup/schema_gold.json`** – Schema for enriched records with predictions in Gold table.
+9. **`src/spark_streaming_job.py`** – Spark job that ingests from Kafka and writes to Bronze → Silver → Gold layers.
+10. **`src/bigquery_loader.py`** – Loads curated Gold data into BigQuery for reporting.
+11. **`dags/etl_pipeline.py`** – Airflow DAG to schedule and manage BigQuery loading.
+12. **`notebooks/pipeline_walkthrough.ipynb`** – Interactive setup guide and walkthrough of key components.
+13. **`notebooks/visualization_insights.ipynb`** – Visual analysis of Gold layer (e.g., alerts, trends, patient summaries).
 
 ## License
 

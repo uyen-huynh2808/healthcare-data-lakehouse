@@ -103,22 +103,20 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | Gold   | `gold_patient_data`   | Final records with `is_ill` label  |
 
 ### BigQuery Tables
-
-### BigQuery Tables:
 - Mirror of `gold_patient_data`
 - Used for analytics and dashboards
 
-### Looker Studio Views:
+### Looker Studio Views
 - **Illness Prediction Summary**
 - **Patient Distribution by Age and Illness**
 - **Historical Illness Trends (Simulated)**
  
 ## ML Model
 
-### Purpose:
+### Purpose
 Predict illness status of a patient based on medical test results.
 
-### Modeling Steps:
+### Modeling Steps
 1. Preprocess data using `prepare_training_data.py`
 2. Handle class imbalance using **SMOTE**
 3. Train a **Random Forest classifier** (`train_model.py`)
@@ -142,8 +140,8 @@ Predict illness status of a patient based on medical test results.
 
 ## Disclaimer
 
-This project is for **educational purposes only**.  
-All data is **synthetically generated** using **Synthea** and **Faker**.  
-It is not intended for clinical or medical use in any real-world setting.
+- This project is for **educational purposes only**.  
+- All data is **synthetically generated** using **Synthea** and **Faker**.  
+- It is not intended for clinical or medical use in any real-world setting.
 
 ---

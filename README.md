@@ -132,11 +132,10 @@ Predict illness status of a patient based on medical test results.
 6. `delta_lake_setup/schema_bronze.json` – Schema for Bronze (raw) layer.
 7. `delta_lake_setup/schema_silver.json` – Schema for Silver (cleaned) layer.
 8. `delta_lake_setup/schema_gold.json` – Schema for Gold (classified) layer.
-9. `src/streaming_inference_job.py` – Spark job that ingests from Kafka and writes to Bronze → Silver → Gold layers.
-10. `src/bigquery_loader.py` – Loads curated Gold data into BigQuery for reporting.
-11. `dags/pipeline_dag.py` – Airflow DAG to schedule and manage BigQuery loading.
-12. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
-13. `notebooks/reporting.ipynb` – Visualization and reporting examples.
+9. `src/streaming_inference_job.py` – Spark job that ingests from Kafka, writes to Bronze → Silver → Gold layers, and loads curated Gold data into BigQuery for reporting.
+10. `dags/pipeline_dag.py` – Airflow DAG to schedule and manage BigQuery loading.
+11. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
+12. `notebooks/reporting.ipynb` – Visualization and reporting examples.
 
 ## Disclaimer
 

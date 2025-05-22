@@ -1,41 +1,25 @@
-# Real-Time Healthcare Lakehouse for Patient Monitoring (Synthea, Faker, Kafka, Spark, Delta Lake, BigQuery)
+# Real-Time Healthcare Data Lakehouse for Illness Prediction (Synthea, Faker, Kafka, Spark, Delta Lake, BigQuery)
 
 ## Project Overview
 
-This project builds a **real-time healthcare data lake and analytics platform** for monitoring patient vitals from simulated **IoT wearable devices**, using a combination of **Synthea** for realistic synthetic patient histories and **Faker** for live streaming vitals. Vital signs like heart rate, temperature, and SpO₂ are streamed via **Apache Kafka**, processed in real time using **Spark Structured Streaming**, and stored in **Delta Lake** using a Bronze–Silver–Gold architecture. Cleaned and aggregated data is loaded into **BigQuery** for analysis and visualized using **Looker**. An **anomaly detection ML model** is integrated to identify abnormal vitals in real time, simulating how healthcare providers can respond to emergencies and monitor patient health at scale.
+This project implements a real-time healthcare data lakehouse system to **predict whether a patient is ill or not** based on simulated medical test data. It uses a combination of **synthetic training data** (static) and **real-time simulated input** to apply machine learning in a streaming context.
+
+- **Synthea** generates **static patient records** for model training.
+- **Faker** simulates **real-time medical test results** to mimic streaming patient records.
+- **Apache Kafka** handles the real-time ingestion of records.
+- **Apache Spark Structured Streaming** processes streaming data and applies a trained ML model to classify each record as "ill" or "healthy".
+- **Delta Lake** stores the processed data in a structured multi-layered format (Bronze → Silver → Gold).
+- **Google BigQuery** supports querying and visualization.
+- **Looker Studio** is used for analytics dashboards and reporting.
 
 ## Project Goals
 
-- **Simulate realistic patient data using Synthea and Faker**
+- Generate realistic training data using **Synthea**.
+- Simulate real-time patient test results using **Faker** and ingest via **Kafka**.
+- Build a **real-time illness prediction pipeline** using Spark Streaming and a pre-trained model.
+- Store data in Delta Lake with a **multi-stage architecture**.
+- Push final results to BigQuery for analysis and dashboarding.
 
-  Use Synthea to generate full synthetic EHR records and vitals distributions.
-
-  Use Faker-guided scripts to simulate real-time streaming data from IoT devices based on Synthea trends.
-
-- **Ingest real-time vitals from simulated IoT patient devices**
-
-  Stream live patient vitals like heart rate, temperature, SpO₂, and blood pressure using Apache Kafka to mimic a hospital monitoring environment.
-
-- **Stream and process data with Spark Structured Streaming**
-
-  Process Kafka streams with schema enforcement, cleansing, timestamp alignment, and enrichment.
-
-- **Store data in Delta Lake using Bronze, Silver, and Gold architecture**
-  - Bronze: Raw Kafka ingestion
-  - Silver: Parsed, cleaned, and enriched data
-  - Gold: Aggregated metrics with anomaly flags
-
-- **Load curated data into BigQuery for analytics**
-
-  Transfer Gold-layer data into Google BigQuery for scalable querying and reporting.
-
-- **Visualize trends and anomalies with Looker Studio**
-
-  Build dashboards for hospital-wide monitoring, patient-level trends, and anomaly alerts.
-
-- **Apply ML models for real-time anomaly detection**
-
-  Train models on historical Synthea-based data and run inference on real-time streams.
 
 ## Architecture
 
@@ -43,22 +27,23 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 
 ## Technology Stack
 
-| Layer                   | Tools/Technologies                                         |
-|------------------------|------------------------------------------------------------|
-| Data Simulation         | Synthea, Faker                            |
-| Ingestion               | Apache Kafka                                               |
-| Streaming               | Apache Spark (Structured Streaming)                        |
-| Storage                 | Delta Lake                     |
-| ML / Anomaly Detection  | PySpark ML, scikit-learn |
-| Orchestration           | Apache Airflow (ETL)            |
-| Query Layer             | Google BigQuery                                            |
-| Visualization           | Looker Studio                                              |
+| Layer             | Tools/Technologies                            |
+|-------------------|-----------------------------------------------|
+| Static Data   | Synthea                                        |
+| Data Simulation | Faker                                       |
+| Ingestion     | Apache Kafka                                  |
+| Stream Processing | Apache Spark Structured Streaming         |
+| Storage       | Delta Lake (Bronze, Silver, Gold)             |
+| Machine Learning | PySpark MLlib, scikit-learn, SMOTE         |
+| Workflow Orchestration | Apache Airflow                       |
+| Analytics     | Google BigQuery                               |
+| Visualization | Looker Studio                                 |
 
 ## Data Used
 
 ### 1. **Synthea-Generated Static Dataset**
 
-- **Source:** `synthea_data/data_for_train.csv`
+- **Source:** `synthea_data/training_data.csv`
 - **Description:** High-quality synthetic patient data generated by Synthea, representing realistic vitals and clinical conditions.
 - **Usage:** Machine learning model training (`RandomForestClassifier`)
 
@@ -82,11 +67,11 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 
 ### 2. **Faker-Based Streaming Simulator**
 
-- **Source:** `src/vitals_kafka_producer.py`
-- **Description:** Real-time JSON events simulating live patient vitals, emitted every second to a Kafka topic (`patient_vitals`).
+- **Source:** `src/streaming_data_producer.py`
+- **Description:** Simulates real-time patient medical test results and publishes them as JSON records to a Kafka topic (`patient_data`), emitting one record per second.
 - **Purpose:**
-  - Emulates real-time device telemetry
-  - Feeds Spark Structured Streaming for Delta Lake ETL and ML scoring
+  - Emulates a live feed of new patient records arriving in real time
+  - Feeds Spark Structured Streaming for ingestion, transformation, and ML-based illness prediction
 
 **Fields in Each Streamed JSON Record:**
 
@@ -111,65 +96,54 @@ This project builds a **real-time healthcare data lake and analytics platform** 
 
 ### Delta Lake Tables
 
-- **`bronze_patient_vitals`**  
-  Raw Kafka data ingested in JSON format. No validation or transformation applied.
-
-- **`silver_patient_vitals`**  
-  Cleaned and parsed vitals data with derived fields like `age`. 
-
-- **`gold_patient_summary`**  
-  Enriched records with model inference scores (e.g., anomaly flags). Optimized for downstream analytics.
+| Layer  | Table Name           | Description                        |
+|--------|----------------------|------------------------------------|
+| Bronze | `bronze_patient_data` | Raw JSON stream from Kafka         |
+| Silver | `silver_patient_data` | Cleaned and typed patient records  |
+| Gold   | `gold_patient_data`   | Final records with `is_ill` label  |
 
 ### BigQuery Tables
 
-- Mirrors the `gold_patient_summary` table from Delta Lake.
-- Used for dashboards, monitoring, and alerts.
+### BigQuery Tables:
+- Mirror of `gold_patient_data`
+- Used for analytics and dashboards
 
-**Suggested Views:**
-- `abnormal_vitals_log` — Lists all records with flagged anomalies or abnormal ranges.
-- `average_vitals_by_age_gender` — Aggregates vitals across age groups and gender.
-- `oxygen_alerts_dashboard` — Shows patients with low oxygen saturation (<90%) over time.
+### Looker Studio Views:
+- **Illness Prediction Summary**
+- **Patient Distribution by Age and Illness**
+- **Historical Illness Trends (Simulated)**
  
 ## ML Model
 
-**Objective:**  
-Identify abnormal patient vitals in real time for early clinical intervention.
+### Purpose:
+Predict illness status of a patient based on medical test results.
 
-**Approach:**  
-- Trained a supervised **Random Forest Classifier** using labeled Synthea data (`is_ill`)
-- Handled class imbalance using **SMOTE** to improve detection of rare illness cases
-- Persisted model with **Joblib** for real-time inference
-
-**Streaming Workflow:**  
-1. Kafka ingests simulated patient vitals  
-2. Spark Streaming loads model and scores each record  
-3. Anomaly predictions are appended to the **Gold Delta Table**  
-4. Results are synced to BigQuery for visualization and alerting
+### Modeling Steps:
+1. Preprocess data using `prepare_training_data.py`
+2. Handle class imbalance using **SMOTE**
+3. Train a **Random Forest classifier** (`train_model.py`)
+4. Save the trained model using `joblib`
 
 ## Project Files
 
-1. `synthea_data/` – Static Synthea-generated patient data used for model training (`data_for_train.csv`).
-2. `src/prepare_data.py` – Cleans and transforms static data for training.
-3. `src/train_model.py` – Trains the classification model on labeled vitals and saves it.
-4. `models/illness_classifier.pkl` – Serialized trained model for real-time inference.
-5. `src/vitals_kafka_producer.py` – Simulates real-time vitals and streams them to Kafka.
-6. `delta_lake_setup/schema_bronze.json` – Schema for raw Kafka data in Bronze table.
-7. `delta_lake_setup/schema_silver.json` – Schema for cleaned records in Silver table.
-8. `delta_lake_setup/schema_gold.json` – Schema for enriched records with predictions in Gold table.
-9. `src/spark_streaming_job.py` – Spark job that ingests from Kafka and writes to Bronze → Silver → Gold layers.
+1. `synthea_data/` – Static Synthea-generated patient data used for model training (`training_data.csv`).
+2. `src/prepare_training_data.py` – Cleans and transforms static data for training.
+3. `src/train_model.py` – Trains the classification model and saves it.
+4. `models/illness_predictor.pkl` – Serialized trained model for real-time inference.
+5. `src/streaming_data_producer.py` – Simulates real-time patient test records using Faker.
+6. `delta_lake_setup/schema_bronze.json` – Schema for Bronze (raw) layer.
+7. `delta_lake_setup/schema_silver.json` – Schema for Silver (cleaned) layer.
+8. `delta_lake_setup/schema_gold.json` – Schema for Gold (classified) layer.
+9. `src/streaming_inference_job.py` – Spark job that ingests from Kafka and writes to Bronze → Silver → Gold layers.
 10. `src/bigquery_loader.py` – Loads curated Gold data into BigQuery for reporting.
-11. `dags/etl_pipeline.py` – Airflow DAG to schedule and manage BigQuery loading.
-12. `notebooks/pipeline_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
-13. `notebooks/visualization_insights.ipynb` – Visual analysis of Gold layer (e.g., alerts, trends, patient summaries).
+11. `dags/pipeline_dag.py` – Airflow DAG to schedule and manage BigQuery loading.
+12. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
+13. `notebooks/reporting.ipynb` – Visualization and reporting examples.
 
-## License
+## Disclaimer
 
-This project uses simulated patient data generated by Synthea, Faker, and custom scripts for educational and research purposes only. The data and dashboards are not based on real patients or real-world trends.
-
-**Disclaimer:**
-
-- The insights, trends, and anomalies presented in this project exist solely within the simulated environment. They should not be interpreted as medical findings, healthcare insights, or clinical recommendations. This project is intended to demonstrate a data engineering and analytics pipeline, not to represent real medical analysis.
-
-- Do not use any of the generated reports, visualizations, or data for decision-making in real healthcare or diagnostics contexts.
+This project is for **educational purposes only**.  
+All data is **synthetically generated** using **Synthea** and **Faker**.  
+It is not intended for clinical or medical use in any real-world setting.
 
 ---

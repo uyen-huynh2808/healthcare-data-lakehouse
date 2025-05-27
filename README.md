@@ -51,7 +51,12 @@ This project implements a real-time healthcare data lakehouse system to **predic
 
 | Feature Name                                                                                  | Description                                             | Type    |
 |-----------------------------------------------------------------------------------------------|---------------------------------------------------------|---------|
-| `age`                                                                                         | Patient age (derived from date of birth)                | Integer |
+| `age_group_0-17`                                                                              | One-hot encoded: 1 if age is 0–17, else 0               | Integer |
+| `age_group_18-34`                                                                             | One-hot encoded: 1 if age is 18–34, else 0              | Integer |
+| `age_group_35-49`                                                                             | One-hot encoded: 1 if age is 35–49, else 0              | Integer |
+| `age_group_50-64`                                                                             | One-hot encoded: 1 if age is 50–64, else 0              | Integer |
+| `age_group_65-79`                                                                             | One-hot encoded: 1 if age is 65–79, else 0              | Integer |
+| `age_group_80+`                                                                               | One-hot encoded: 1 if age is 80+, else 0                | Integer |
 | `gender`                                                                                      | Binary encoded gender (0 = Female, 1 = Male)            | Integer |
 | `body_mass_index`                                                                             | Body mass index (BMI) in kg/m²                          | Float   |
 | `body_temperature`                                                                            | Body temperature in °C                                  | Float   |
@@ -103,8 +108,27 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | Gold   | `gold_patient_data`   | Final records with `is_ill` label  |
 
 ### BigQuery Tables
-- Mirror of `gold_patient_data`
+
+- Table: `patient_data.gold_patient_data`
+- Mirror of the Delta Lake Gold table
 - Used for analytics and dashboards
+
+| Column Name               | Description                                             | Type    |
+|--------------------------|---------------------------------------------------------|---------|
+| `patient_id`             | Unique identifier for the patient                       | String  |
+| `age_group`              | Age group of the patient (e.g., 0-17, 18-34, ...)       | String  |
+| `gender`                 | Binary encoded gender (0 = Female, 1 = Male)            | Integer |
+| `body_mass_index`        | Body mass index (BMI) in kg/m²                          | Float   |
+| `body_temperature`       | Body temperature in °C                                  | Float   |
+| `heart_rate`             | Heart rate in beats per minute (bpm)                    | Integer |
+| `systolic_blood_pressure`| Systolic blood pressure in mmHg                        | Integer |
+| `creatinine`             | Creatinine level in mg/dL                               | Float   |
+| `alt`                    | Alanine aminotransferase (ALT) level in U/L            | Float   |
+| `glucose`                | Blood glucose level in mg/dL                            | Float   |
+| `hemoglobin`             | Hemoglobin concentration in g/dL                        | Float   |
+| `leukocytes`             | White blood cell count (10³/μL)                         | Float   |
+| `oxygen_saturation`      | Oxygen saturation (SpO₂) percentage                     | Integer |
+| `prediction`             | Predicted health status (0 = Healthy, 1 = Ill)          | Integer |
 
 ### Looker Studio Views
 - **Illness Prediction Summary**

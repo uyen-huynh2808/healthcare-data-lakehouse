@@ -34,7 +34,7 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | Ingestion     | Apache Kafka                                  |
 | Stream Processing | Apache Spark Structured Streaming         |
 | Storage       | Delta Lake (Bronze, Silver, Gold)             |
-| Machine Learning | PySpark ML, scikit-learn, SMOTE         |
+| Machine Learning | pandas, scikit-learn, SMOTE         |
 | Analytics     | Google BigQuery                               |
 | Visualization | Looker Studio                                 |
 

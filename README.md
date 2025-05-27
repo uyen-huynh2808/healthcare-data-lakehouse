@@ -35,7 +35,6 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | Stream Processing | Apache Spark Structured Streaming         |
 | Storage       | Delta Lake (Bronze, Silver, Gold)             |
 | Machine Learning | PySpark MLlib, scikit-learn, SMOTE         |
-| Workflow Orchestration | Apache Airflow                       |
 | Analytics     | Google BigQuery                               |
 | Visualization | Looker Studio                                 |
 
@@ -131,9 +130,10 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | `prediction`             | Predicted health status (0 = Healthy, 1 = Ill)          | Integer |
 
 ### Looker Studio Views
-- **Illness Prediction Summary**
-- **Patient Distribution by Age and Illness**
-- **Historical Illness Trends (Simulated)**
+- .
+- .
+- .
+- .
  
 ## ML Model
 
@@ -157,9 +157,8 @@ Predict illness status of a patient based on medical test results.
 7. `delta_lake_setup/schema_silver.json` – Schema for Silver (cleaned) layer.
 8. `delta_lake_setup/schema_gold.json` – Schema for Gold (classified) layer.
 9. `src/streaming_inference_job.py` – Spark job that ingests from Kafka, writes to Bronze → Silver → Gold layers, and loads curated Gold data into BigQuery for reporting.
-10. `dags/pipeline_dag.py` – Airflow DAG to schedule and manage BigQuery loading.
-11. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
-12. `notebooks/reporting.ipynb` – Visualization and reporting examples.
+10. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
+11. `notebooks/reporting.ipynb` – Visualization and reporting examples.
 
 ## Disclaimer
 

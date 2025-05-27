@@ -23,7 +23,7 @@ This project implements a real-time healthcare data lakehouse system to **predic
 
 ## Architecture
 
-![architecture](https://github.com/user-attachments/assets/044e08d7-fe4d-4df3-92e3-c471b9a5fed2)
+![architecture](https://github.com/user-attachments/assets/f62024fd-ccbb-4c17-866b-e402937a4043)
 
 ## Technology Stack
 

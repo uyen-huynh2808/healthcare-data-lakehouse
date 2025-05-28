@@ -130,10 +130,9 @@ This project implements a real-time healthcare data lakehouse system to **predic
 | `prediction`             | Predicted health status (0 = Healthy, 1 = Ill)          | Integer |
 
 ### Looker Studio Views
-- .
-- .
-- .
-- .
+- Patient Age Overview
+- Lab Tests by Age Group
+- Gender-Based Differences
  
 ## ML Model
 

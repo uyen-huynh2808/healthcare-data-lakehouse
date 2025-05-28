@@ -156,7 +156,7 @@ Predict illness status of a patient based on medical test results.
 7. `delta_lake_setup/schema_silver.json` – Schema for Silver (cleaned) layer.
 8. `delta_lake_setup/schema_gold.json` – Schema for Gold (classified) layer.
 9. `src/streaming_inference_job.py` – Spark job that ingests from Kafka, writes to Bronze → Silver → Gold layers, and loads curated Gold data into BigQuery for reporting.
-10. `notebooks/project_walkthrough.md` – Interactive setup guide and walkthrough of key components.
+10. `notebooks/project_walkthrough.ipynb` – Interactive setup guide and walkthrough of key components.
 11. `notebooks/reporting.md` – Visualization and reporting examples.
 
 ## Disclaimer

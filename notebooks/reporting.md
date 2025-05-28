@@ -6,6 +6,7 @@ The reporting visualizes real-time predictions of patient illness using Looker S
 - X-Axis: `age_group`
 - Y-Axis: Record Count – the number of patient records in each age group
 
+![chart1](https://github.com/user-attachments/assets/39addbe4-7cef-47b9-bd27-5bd730d2245c)
 
 **Insight:**
 

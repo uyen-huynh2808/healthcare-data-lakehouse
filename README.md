@@ -16,9 +16,9 @@ This project implements a real-time healthcare data lakehouse system to **predic
 
 - Generate realistic training data using **Synthea**.
 - Simulate real-time patient test results using **Faker** and ingest via **Kafka**.
-- Build a **real-time illness prediction pipeline** using Spark Streaming and a pre-trained model.
-- Store data in Delta Lake with a **multi-stage architecture**.
-- Push final results to BigQuery for analysis and dashboarding.
+- Build a **real-time illness prediction pipeline** using **Spark Streaming** and a pre-trained model.
+- Store data in **Delta Lake** with a **multi-stage architecture**.
+- Push final results to **BigQuery** for analysis and reporting.
 
 
 ## Architecture

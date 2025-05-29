@@ -100,11 +100,11 @@ This project implements a real-time healthcare data lakehouse system to **predic
 
 ### Delta Lake Tables
 
-| Layer  | Table Name           | Description                        |
-|--------|----------------------|------------------------------------|
-| Bronze | `bronze_patient_data` | Raw JSON stream from Kafka         |
-| Silver | `silver_patient_data` | Cleaned and transformed patient records  |
-| Gold   | `gold_patient_data`   | Final records with `is_ill` label  |
+| Layer  | Description                        |
+|--------|------------------------------------|
+| Bronze | Raw JSON stream from Kafka         |
+| Silver | Cleaned and transformed patient records  |
+| Gold   | Final records with `is_ill` label  |
 
 ### BigQuery Tables
 

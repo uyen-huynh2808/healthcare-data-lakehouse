@@ -32,7 +32,7 @@ The reporting visualizes real-time predictions of patient illness using Looker S
 - X-axis: `gender`
 - Y-Axis: `hemoglobin` (blue), `creatinine` (orange)
 
-![chart3](https://github.com/user-attachments/assets/783b2111-68c0-46b2-baa3-eba257c4a111)
+![chart3](https://github.com/user-attachments/assets/8446c0bc-3d5f-4864-9d04-99180144e733)
 
 **Insight:**
 

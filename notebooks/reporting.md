@@ -18,7 +18,7 @@ The reporting visualizes real-time predictions of patient illness using Looker S
 - Group by: `age_group`
 - Metrics: `glucose`, `hemoglobin`, `leukocytes`, `creatinine`
 
-![chart2](https://github.com/user-attachments/assets/1b5b59ef-2695-46c3-805e-0bef090a1e6b)
+![chart2](https://github.com/user-attachments/assets/18d35c96-f99d-46df-9771-97966785b28e)
 
 **Insight:**
 

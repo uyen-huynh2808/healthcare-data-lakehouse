@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from imblearn.over_sampling import SMOTE
 import joblib
 
-# Load data with only age column
+# Load data
 data = pd.read_csv("synthea_data/training_data.csv")
 
 # Create age group from age column

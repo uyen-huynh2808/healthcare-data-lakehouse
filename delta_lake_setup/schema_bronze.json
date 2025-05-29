@@ -1,0 +1,19 @@
+{
+  "type": "struct",
+  "fields": [
+    { "name": "patient_id", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "timestamp", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "birthday", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "gender", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "body_mass_index", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "body_temperature", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "heart_rate", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "systolic_blood_pressure", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "creatinine", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "alanine_aminotransferase_[enzymatic_activity/volume]_in_serum_or_plasma", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "glucose", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "hemoglobin_[mass/volume]_in_blood", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "leukocytes_[#/volume]_in_blood_by_automated_count", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "oxygen_saturation_in_arterial_blood", "type": "string", "nullable": true, "metadata": {} }
+  ]
+}

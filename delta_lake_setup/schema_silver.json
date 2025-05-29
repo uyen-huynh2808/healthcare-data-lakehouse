@@ -1,0 +1,27 @@
+{
+  "type": "struct",
+  "fields": [
+    { "name": "patient_id", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "timestamp", "type": "timestamp", "nullable": true, "metadata": {} },
+    { "name": "birthday", "type": "date", "nullable": true, "metadata": {} },
+    { "name": "gender", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "body_mass_index", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "body_temperature", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "heart_rate", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "systolic_blood_pressure", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "creatinine", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "alanine_aminotransferase_[enzymatic_activity/volume]_in_serum_or_plasma", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "glucose", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "hemoglobin_[mass/volume]_in_blood", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "leukocytes_[#/volume]_in_blood_by_automated_count", "type": "double", "nullable": true, "metadata": {} },
+    { "name": "oxygen_saturation_in_arterial_blood", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group", "type": "string", "nullable": true, "metadata": {} },
+    { "name": "age_group_0-17", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group_18-34", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group_35-49", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group_50-64", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group_65-79", "type": "integer", "nullable": true, "metadata": {} },
+    { "name": "age_group_80+",  "type": "integer", "nullable": true, "metadata": {} }
+  ]
+}

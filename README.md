@@ -165,4 +165,32 @@ Predict illness status of a patient based on medical test results.
 - All data is **synthetically generated** using **Synthea** and **Faker**.  
 - It is not intended for clinical or medical use in any real-world setting.
 
+## Limitations
+- Synthetic Data Only: All input is generated with Synthea and Faker, which may lack the complexity, variability, and edge cases of real clinical data.
+- Offline Model Retraining: The ML model is trained offline and used as-is during streaming. There is no online learning or adaptive update mechanism.
+- Basic Feature Set: The current feature set doesn’t account for patient history, comorbidities, or longitudinal trends.
+- No Model Monitoring: There is no performance monitoring or drift detection in the live prediction phase.
+- Latency Not Optimized: The streaming job is batch-based and may not achieve true low-latency performance in all configurations.
+
+## Future Developments
+- Incorporate Longitudinal Data: Enhance predictions using patient history and temporal trends from repeated visits.
+- Introduce Model Monitoring: Integrate tools like MLflow, Prometheus, or custom drift detection to monitor prediction quality over time.
+- Online or Incremental Learning: Explore real-time model updates using streaming-compatible frameworks like River.
+- Real-Time Alerting: Push prediction results to alerting platforms (e.g., Slack, PagerDuty) for operational simulation.
+- Enhanced Visualization: Create interactive dashboards in Looker Studio for patient-level drilldowns, anomaly detection, and model performance summaries.
+- Governance & Metadata Tracking: Add Apache Atlas or Data Catalog for lineage, schema versioning, and audit readiness.
+
+## Conclusion
+
+This project showcases a real-time healthcare data lakehouse architecture for illness prediction using a modern big data stack. By combining Synthea-generated training data with real-time simulated patient vitals, it demonstrates how machine learning can be applied to streaming medical data in a scalable and modular fashion.
+
+Key highlights include:
+
+- Real-time ingestion and processing using Kafka and Spark Structured Streaming.
+- Delta Lake multi-layered architecture (Bronze, Silver, Gold) for efficient and reliable data storage.
+- Integration with BigQuery and Looker Studio for real-time analytics and visualizations.
+- Application of a Random Forest classifier to predict patient health status based on clinical vitals.
+
+This end-to-end pipeline represents a foundational blueprint for future real-world healthcare streaming systems — balancing engineering, machine learning, and analytics in one solution.
+
 ---
